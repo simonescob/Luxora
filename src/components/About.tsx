@@ -1,9 +1,7 @@
-import React from 'react'
 import {
   Leaf,
   Award,
   Users,
-  Truck,
   Heart,
   Globe,
   Zap,
@@ -374,6 +372,20 @@ const About = () => {
                   )}
                 >
                   <div className="text-primary-500 mb-4">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
+                    {value.description}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
         {/* Call to Action Section */}
         <div className="mt-20 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl shadow-lg overflow-hidden">
           <div className="px-8 py-16 text-center">
@@ -397,19 +409,6 @@ const About = () => {
                 Get in Touch
               </a>
             </div>
-          </div>
-        </div>
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
-                    {value.description}
-                  </p>
-                </div>
-              )
-            })}
           </div>
         </div>
 
