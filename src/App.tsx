@@ -1,10 +1,12 @@
 import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import LandingPage from './pages/LandingPage'
 import AdminDashboard from './pages/AdminDashboard'
 import AddProduct from './pages/AddProduct'
 import EditProduct from './pages/EditProduct'
 import HeroPrototypePage from './pages/HeroPrototypePage'
+import AboutPage from './pages/AboutPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import { AuthProvider } from './contexts/AuthContext'
 import { Product, ProductFormData } from './types'
@@ -211,19 +213,22 @@ function App({ children }: AppProps) {
       <AuthProvider>
         <ProductContext.Provider value={productValue}>
           <DarkModeContext.Provider value={darkModeValue}>
-            <div className="min-h-screen bg-white dark:bg-secondary-900 transition-colors duration-300">
-              {children || (
-                <ErrorBoundary>
-                  <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
-                    <Route path="/admin/add-product" element={<AddProduct />} />
-                    <Route path="/admin/edit/:id" element={<EditProduct />} />
-                    <Route path="/prototype" element={<HeroPrototypePage />} />
-                  </Routes>
-                </ErrorBoundary>
-              )}
-            </div>
+            <HelmetProvider>
+              <div className="min-h-screen bg-white dark:bg-secondary-900 transition-colors duration-300">
+                {children || (
+                  <ErrorBoundary>
+                    <Routes>
+                      <Route path="/" element={<LandingPage />} />
+                      <Route path="/about" element={<AboutPage />} />
+                      <Route path="/admin" element={<AdminDashboard />} />
+                      <Route path="/admin/add-product" element={<AddProduct />} />
+                      <Route path="/admin/edit/:id" element={<EditProduct />} />
+                      <Route path="/prototype" element={<HeroPrototypePage />} />
+                    </Routes>
+                  </ErrorBoundary>
+                )}
+              </div>
+            </HelmetProvider>
           </DarkModeContext.Provider>
         </ProductContext.Provider>
       </AuthProvider>

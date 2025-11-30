@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ShoppingCart, User, Menu, X, Settings, LogOut, Shield } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useAuth, LoginModal } from '../contexts/AuthContext'
+import NavLink from './NavLink'
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -13,7 +14,7 @@ const Header = () => {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/#products', label: 'Products' },
-    { to: '/#about', label: 'About' },
+    { to: '/about', label: 'About' },
   ]
 
   const handleDashboardAccess = () => {
@@ -55,15 +56,12 @@ const Header = () => {
             <div className="hidden md:block">
               <div className="mx-auto flex items-baseline space-x-8" role="menubar">
                 {navLinks.map((link) => (
-                  <Link
+                  <NavLink
                     key={link.to}
                     to={link.to}
-                    className="text-secondary-700 dark:text-secondary-300 hover:text-primary-500 dark:hover:text-primary-400 focus:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                    role="menuitem"
-                    aria-label={`Navigate to ${link.label} section`}
-                  >
-                    {link.label}
-                  </Link>
+                    label={link.label}
+                    activeClassName="text-primary-500"
+                  />
                 ))}
               </div>
             </div>
@@ -194,16 +192,14 @@ const Header = () => {
               aria-label="Mobile navigation menu"
             >
               {navLinks.map((link) => (
-                <Link
+                <NavLink
                   key={link.to}
                   to={link.to}
-                  className="block px-3 py-2 text-secondary-700 dark:text-secondary-300 hover:text-primary-500 dark:hover:text-primary-400 focus:text-primary-500 hover:bg-secondary-100 dark:hover:bg-secondary-700 focus:bg-secondary-100 rounded-md text-base font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  role="menuitem"
+                  label={link.label}
+                  activeClassName="text-primary-500"
                   onClick={() => setMobileOpen(false)}
-                  aria-label={`Navigate to ${link.label} section`}
-                >
-                  {link.label}
-                </Link>
+                  className="block px-3 py-2 text-base"
+                />
               ))}
               
               {/* Mobile Dashboard Button */}

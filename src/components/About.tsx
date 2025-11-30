@@ -1,11 +1,11 @@
 import React from 'react'
-import { 
-  Leaf, 
-  Award, 
-  Users, 
-  Truck, 
-  Heart, 
-  Globe, 
+import {
+  Leaf,
+  Award,
+  Users,
+  Truck,
+  Heart,
+  Globe,
   Zap,
   Shield,
   Mail,
@@ -16,8 +16,18 @@ import {
   Instagram,
   Linkedin
 } from 'lucide-react'
+import { useScrollAnimation } from '../hooks/useScrollAnimations'
+import { cn } from '../lib/utils'
 
 const About = () => {
+  // Scroll animations for different sections
+  const heroAnimation = useScrollAnimation({ threshold: 0.1 })
+  const missionAnimation = useScrollAnimation({ threshold: 0.15 })
+  const statsAnimation = useScrollAnimation({ threshold: 0.2 })
+  const teamAnimation = useScrollAnimation({ threshold: 0.15 })
+  const timelineAnimation = useScrollAnimation({ threshold: 0.1 })
+  const valuesAnimation = useScrollAnimation({ threshold: 0.15 })
+  const contactAnimation = useScrollAnimation({ threshold: 0.1 })
   const values = [
     {
       icon: <Leaf className="w-8 h-8" />,
@@ -130,7 +140,13 @@ const About = () => {
     <section id="about" className="py-20 bg-secondary-50 dark:bg-secondary-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <div className="text-center space-y-6 mb-20">
+        <div
+          ref={heroAnimation.elementRef}
+          className={cn(
+            "text-center space-y-6 mb-20 transition-all duration-700",
+            heroAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <h1 className="text-5xl font-bold text-secondary-900 dark:text-white">
             About Luxora
           </h1>
@@ -141,7 +157,13 @@ const About = () => {
         </div>
 
         {/* Mission & Vision */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        <div
+          ref={missionAnimation.elementRef}
+          className={cn(
+            "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20 transition-all duration-700",
+            missionAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-secondary-900 dark:text-white">
@@ -151,13 +173,13 @@ const About = () => {
             </div>
             <div className="space-y-6 text-lg text-secondary-600 dark:text-secondary-300 leading-relaxed">
               <p>
-                At Luxora, we believe that your home should be a reflection of your unique personality 
-                and values. Our mission is to provide premium, sustainable home decor that not only 
+                At Luxora, we believe that your home should be a reflection of your unique personality
+                and values. Our mission is to provide premium, sustainable home decor that not only
                 enhances your living space but also contributes to a healthier planet.
               </p>
               <p>
-                We're committed to ethical sourcing, fair trade practices, and environmental 
-                responsibility, ensuring that every purchase you make supports both beautiful design 
+                We're committed to ethical sourcing, fair trade practices, and environmental
+                responsibility, ensuring that every purchase you make supports both beautiful design
                 and positive global impact.
               </p>
             </div>
@@ -187,7 +209,13 @@ const About = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+        <div
+          ref={statsAnimation.elementRef}
+          className={cn(
+            "grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 transition-all duration-700",
+            statsAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           {stats.map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-4xl font-bold text-primary-500 mb-2">{stat.number}</div>
@@ -200,7 +228,13 @@ const About = () => {
 
         {/* Team Section */}
         <div className="mb-20">
-          <div className="text-center space-y-4 mb-16">
+          <div
+            ref={teamAnimation.elementRef}
+            className={cn(
+              "text-center space-y-4 mb-16 transition-all duration-700",
+              teamAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            )}
+          >
             <h2 className="text-4xl font-bold text-secondary-900 dark:text-white">
               Meet Our Team
             </h2>
@@ -211,42 +245,59 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="bg-white dark:bg-secondary-900 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-w-1 aspect-h-1">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-64 object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
-                    {member.role}
-                  </p>
-                  <p className="text-secondary-600 dark:text-secondary-300 text-sm leading-relaxed mb-4">
-                    {member.bio}
-                  </p>
-                  <div className="flex space-x-3">
-                    <a href={member.linkedin} className="text-secondary-400 hover:text-primary-500 transition-colors duration-200">
-                      <Linkedin size={18} />
-                    </a>
-                    <a href={member.twitter} className="text-secondary-400 hover:text-primary-500 transition-colors duration-200">
-                      <Twitter size={18} />
-                    </a>
+            {teamMembers.map((member, index) => {
+              const memberAnimation = useScrollAnimation({ threshold: 0.1, triggerOnce: true })
+              return (
+                <div
+                  key={index}
+                  ref={memberAnimation.elementRef}
+                  className={cn(
+                    "bg-white dark:bg-secondary-900 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 overflow-hidden hover:shadow-lg transition-all duration-300",
+                    memberAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  )}
+                >
+                  <div className="aspect-w-1 aspect-h-1">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-64 object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
+                      {member.role}
+                    </p>
+                    <p className="text-secondary-600 dark:text-secondary-300 text-sm leading-relaxed mb-4">
+                      {member.bio}
+                    </p>
+                    <div className="flex space-x-3">
+                      <a href={member.linkedin} className="text-secondary-400 hover:text-primary-500 transition-colors duration-200">
+                        <Linkedin size={18} />
+                      </a>
+                      <a href={member.twitter} className="text-secondary-400 hover:text-primary-500 transition-colors duration-200">
+                        <Twitter size={18} />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
         {/* Timeline */}
         <div className="mb-20">
-          <div className="text-center space-y-4 mb-16">
+          <div
+            ref={timelineAnimation.elementRef}
+            className={cn(
+              "text-center space-y-4 mb-16 transition-all duration-700",
+              timelineAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            )}
+          >
             <h2 className="text-4xl font-bold text-secondary-900 dark:text-white">
               Our Journey
             </h2>
@@ -261,30 +312,46 @@ const About = () => {
             <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-primary-200 dark:bg-primary-800"></div>
             
             <div className="space-y-12">
-              {timeline.map((item, index) => (
-                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-                  {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-secondary-800 z-10"></div>
-                  
-                  {/* Content */}
-                  <div className={`bg-white dark:bg-secondary-900 p-6 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 max-w-md ${index % 2 === 0 ? 'mr-auto pr-8' : 'ml-auto pl-8'}`}>
-                    <div className="text-2xl font-bold text-primary-500 mb-2">{item.year}</div>
-                    <h3 className="text-lg font-semibold text-secondary-900 dark:text-white mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-secondary-600 dark:text-secondary-300">
-                      {item.description}
-                    </p>
+              {timeline.map((item, index) => {
+                const timelineItemAnimation = useScrollAnimation({ threshold: 0.1, triggerOnce: true })
+                return (
+                  <div
+                    key={index}
+                    ref={timelineItemAnimation.elementRef}
+                    className={cn(
+                      `relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'} transition-all duration-700`,
+                      timelineItemAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    )}
+                  >
+                    {/* Timeline dot */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-secondary-800 z-10"></div>
+                    
+                    {/* Content */}
+                    <div className={`bg-white dark:bg-secondary-900 p-6 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 max-w-md ${index % 2 === 0 ? 'mr-auto pr-8' : 'ml-auto pl-8'}`}>
+                      <div className="text-2xl font-bold text-primary-500 mb-2">{item.year}</div>
+                      <h3 className="text-lg font-semibold text-secondary-900 dark:text-white mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-secondary-600 dark:text-secondary-300">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
 
         {/* Core Values */}
         <div className="mb-20">
-          <div className="text-center space-y-4 mb-16">
+          <div
+            ref={valuesAnimation.elementRef}
+            className={cn(
+              "text-center space-y-4 mb-16 transition-all duration-700",
+              valuesAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            )}
+          >
             <h2 className="text-4xl font-bold text-secondary-900 dark:text-white">
               What We Stand For
             </h2>
@@ -295,24 +362,65 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <div key={index} className="bg-white dark:bg-secondary-900 p-8 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 hover:shadow-lg transition-shadow duration-300">
-                <div className="text-primary-500 mb-4">
-                  {value.icon}
+            {values.map((value, index) => {
+              const valueAnimation = useScrollAnimation({ threshold: 0.1, triggerOnce: true })
+              return (
+                <div
+                  key={index}
+                  ref={valueAnimation.elementRef}
+                  className={cn(
+                    "bg-white dark:bg-secondary-900 p-8 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 hover:shadow-lg transition-all duration-300",
+                    valueAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  )}
+                >
+                  <div className="text-primary-500 mb-4">
+        {/* Call to Action Section */}
+        <div className="mt-20 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl shadow-lg overflow-hidden">
+          <div className="px-8 py-16 text-center">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Ready to Transform Your Space?
+            </h2>
+            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+              Join thousands of satisfied customers who have discovered the perfect blend of luxury and sustainability.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/" 
+                className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500"
+              >
+                Shop Collection
+              </a>
+              <a 
+                href="#contact" 
+                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500"
+              >
+                Get in Touch
+              </a>
+            </div>
+          </div>
+        </div>
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
+                    {value.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-secondary-900 dark:text-white mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-secondary-600 dark:text-secondary-300 leading-relaxed">
-                  {value.description}
-                </p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
         {/* Contact Information */}
-        <div className="bg-white dark:bg-secondary-900 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 p-8">
+        <div
+          ref={contactAnimation.elementRef}
+          className={cn(
+            "bg-white dark:bg-secondary-900 rounded-2xl shadow-sm border border-secondary-200 dark:border-secondary-700 p-8 transition-all duration-700",
+            contactAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-3xl font-bold text-secondary-900 dark:text-white">
               Get In Touch
